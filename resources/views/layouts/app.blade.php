@@ -11,6 +11,9 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+        <!-- datatable css -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/2.1.6/css/dataTables.dataTables.css" />
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
@@ -23,5 +26,11 @@
                 {{ $slot }}
             </main>
         </div>
+        <!-- jquery -->
+        <script type="module" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <!-- datatable js -->
+        <script type="module" src="https://cdn.datatables.net/2.1.6/js/dataTables.js"></script>
+
+        @stack('scripts')
     </body>
 </html>
