@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AssignController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +21,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // ? assign routes
     Route::post('/assigns-store', [AssignController::class, 'store'])->name("assigns.store");
     Route::get('/assignee-check/{taskId}/{userId}', [AssignController::class, 'checkAssignee'])->name("assigns.check");
+
+    // ? permission routes
+    Route::post('/permissions-store', [PermissionController::class, 'store'])->name("permissions.store");
+    Route::get('/get-permissions-by-userId/{userId}', [PermissionController::class, 'getPermissionByUserId'])->name("permissions.userId");
+    // Route::get('/permissions-check/{userId}', [PermissionController::class, 'checkPermission'])->name("permissions.check");
 });
 
 // Admin-specific routes

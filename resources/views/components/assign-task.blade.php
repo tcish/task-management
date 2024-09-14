@@ -63,7 +63,7 @@
         }
       });
 
-      // check for duplicate assign
+      // check for duplicate assignee
       $("#assign_to").on("change", function() {
         let task_id = $("#task-id").val();
         let user_id = $("#assign_to").val();

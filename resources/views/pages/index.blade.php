@@ -14,6 +14,8 @@
             <div class="card-body text-dark overflow-auto">
               <!-- Add Task -->
               <x-add-task />
+              <!-- permission -->
+              <x-permission :users="$users" />
 
               <!-- Filter -->
               <select id="statusFilter" class="float-start">
@@ -139,6 +141,7 @@
         // Trigger initial filter based on default selected filter value
         table.draw();
 
+        // had to make global because vite.js module base execution
         window.editTask = function(taskId) {
           $.ajax({
             type: "get",

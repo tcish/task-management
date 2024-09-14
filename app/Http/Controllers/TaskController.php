@@ -35,7 +35,7 @@ class TaskController extends Controller
 
         $tasks = $tasks->get();
 
-        // for assign users list
+        // for assign & permission users list
         $users = User::where("role", "employee")->get();
 
         return view("pages.index")->with("tasks", $tasks)->with("users", $users);
