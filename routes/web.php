@@ -15,16 +15,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // ? task routes
-    Route::post('/tasks/update/{task}', [TaskController::class, 'update']);
+    Route::post('/tasks/update/{task}', [TaskController::class, 'update'])->middleware("can:is-admin");
     Route::resource('tasks', TaskController::class);
     
     // ? assign routes
-    Route::post('/assigns-store', [AssignController::class, 'store'])->name("assigns.store");
-    Route::get('/assignee-check/{taskId}/{userId}', [AssignController::class, 'checkAssignee'])->name("assigns.check");
+    Route::post('/assigns-store', [AssignController::class, 'store'])->name("assigns.store")->middleware("can:can_assign");
+    Route::get('/assignee-check/{taskId}/{userId}', [AssignController::class, 'checkAssignee'])->name("assigns.check")->middleware("can:can_assign");
 
     // ? permission routes
-    Route::post('/permissions-store', [PermissionController::class, 'store'])->name("permissions.store");
-    Route::get('/get-permissions-by-userId/{userId}', [PermissionController::class, 'getPermissionByUserId'])->name("permissions.userId");
+    Route::post('/permissions-store', [PermissionController::class, 'store'])->name("permissions.store")->middleware("can:is-admin");
+    Route::get('/get-permissions-by-userId/{userId}', [PermissionController::class, 'getPermissionByUserId'])->name("permissions.userId")->middleware("can:is-admin");
     // Route::get('/permissions-check/{userId}', [PermissionController::class, 'checkPermission'])->name("permissions.check");
 });
 

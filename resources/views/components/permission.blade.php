@@ -56,40 +56,21 @@
   <script type="module">
     // Function to validate all forms
     function validateForms() {
-      let isValid = true;
+        let isValid = true;
 
-      // Loop over forms and check validity
-      $('.needs-permission-form-validation').each(function() {
-        const form = $(this);
+        // Loop over forms and check validity
+        $('.needs-permission-form-validation').each(function() {
+          const form = $(this);
+          if (!form[0].checkValidity()) {
+            isValid = false;
+            form.addClass('was-validated');
+          } else {
+            form.removeClass('was-validated');
+          }
+        });
 
-        // Check if at least one checkbox is checked
-        const checkboxes = form.find('input[name="permission[]"]');
-        const isChecked = checkboxes.is(':checked');
-
-        if (!isChecked) {
-          isValid = false;
-          $('#checkboxError').show();
-          checkboxes.each(function() {
-            $(this).addClass('is-invalid');
-          });
-        } else {
-          $('#checkboxError').hide();
-          checkboxes.each(function() {
-            $(this).removeClass('is-invalid');
-          });
-        }
-
-        // Check overall form validity
-        if (!form[0].checkValidity() || !isChecked) {
-          isValid = false;
-          form.addClass('was-validated');
-        } else {
-          form.removeClass('was-validated');
-        }
-      });
-
-      return isValid;
-    }
+        return isValid;
+      }
 
     // Attach event listener to the submit button
     $('#permissionFormSubmit').on('click', function(event) {

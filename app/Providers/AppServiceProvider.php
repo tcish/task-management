@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use App\Http\Middleware\RoleMiddleware;
 use App\Models\Task;
+use App\Models\TaskPermission;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
@@ -30,28 +32,30 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
         // Define a gate for admin check
-        Gate::define('is-admin', function (User $user) {
-            return $user->role === 'admin';
+        Gate::define('is-admin', function () {
+            return Auth::user()->role === 'admin';
         });
 
-         // Define a gate for viewing a task
-        Gate::define('view-task', function (User $user, Task $task) {
-            return $user->id === $task->user_id;
+         // Define a gate can assign task permission
+        Gate::define('can_assign', function () {
+            if (Auth::user()->role == "employee") {
+                $permission = TaskPermission::where("permit_to", Auth::user()->id)->select("can_assign")->first();
+    
+                return empty($permission) ? false : ($permission->can_assign ? true : false);
+            } else if(Auth::user()->role == "admin") {
+                return true;
+            }
         });
 
-        // Define a gate for creating a task
-        Gate::define('create-task', function (User $user) {
-            return $user->role === 'admin'; // Only admin can create tasks
-        });
+        // Define a gate can create task permission
+        Gate::define('can_create', function () {
+            if (Auth::user()->role == "employee") {
+                $permission = TaskPermission::where("permit_to", Auth::user()->id)->select("can_create")->first();
 
-        // Define a gate for updating a task
-        Gate::define('update-task', function (User $user, Task $task) {
-            return $user->id === $task->user_id;
-        });
-
-        // Define a gate for deleting a task
-        Gate::define('delete-task', function (User $user, Task $task) {
-            return $user->id === $task->user_id;
+                return empty($permission) ? false : ($permission->can_create ? true : false);
+            } else if(Auth::user()->role == "admin") {
+                return true;
+            }
         });
     }
 }

@@ -15,7 +15,9 @@
               <!-- Add Task -->
               <x-add-task />
               <!-- permission -->
-              <x-permission :users="$users" />
+              @can("is-admin")
+                <x-permission :users="$users" />
+              @endcan
 
               <!-- Filter -->
               <select id="statusFilter" class="float-start">
@@ -51,18 +53,26 @@
                       </td>
                       <td>{{ $task->createdBy->name }}</td>
                       <td class="d-flex">
-                        <button type="button" class="btn btn-sm btn-secondary me-2" data-bs-toggle="modal"
-                          data-bs-target="#taskAssignModal"
-                          onclick="assignModal('{{ base64_encode($task->id) }}')">Assign</button>
-                        <button type="button" class="btn btn-sm btn-info me-2" data-bs-toggle="modal"
-                          data-bs-target="#taskEditModal"
-                          onclick="editTask('{{ base64_encode($task->id) }}')">Edit</button>
-                        <form method="post" action="{{ route("tasks.destroy", base64_encode($task->id)) }}"
-                          id="deleteTaskForm">
-                          @csrf
-                          @method("delete")
-                          <button type="submit" class="btn btn-sm btn-danger" id="deleteTaskButton">Delete</button>
-                        </form>
+                        @can("can_assign")
+                          <button type="button" class="btn btn-sm btn-secondary me-2" data-bs-toggle="modal"
+                            data-bs-target="#taskAssignModal" onclick="assignModal('{{ base64_encode($task->id) }}')">
+                            Assign
+                          </button>
+                        @endcan
+
+                        @can('is-admin')
+                          <button type="button" class="btn btn-sm btn-info me-2" data-bs-toggle="modal"
+                            data-bs-target="#taskEditModal" onclick="editTask('{{ base64_encode($task->id) }}')">
+                            Edit
+                          </button>
+
+                          <form method="post" action="{{ route("tasks.destroy", base64_encode($task->id)) }}"
+                            id="deleteTaskForm">
+                            @csrf
+                            @method("delete")
+                            <button type="submit" class="btn btn-sm btn-danger" id="deleteTaskButton">Delete</button>
+                          </form>
+                        @endcan
                       </td>
                     </tr>
                   @endforeach

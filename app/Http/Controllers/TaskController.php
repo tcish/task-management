@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TaskRequest;
 use App\Models\Task;
-use App\Models\TaskAssignment;
 use App\Models\User;
 use Illuminate\Support\Facades\Session;
 use App\Traits\CurrentUserTrait;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class TaskController extends Controller
@@ -25,7 +23,7 @@ class TaskController extends Controller
         $tasks = Task::select(['tasks.id', 'tasks.title', 'tasks.due_date', 'tasks.status', 'tasks.desc', 'tasks.created_by'])
                     ->with('createdBy:id,name');
 
-        if (!Gate::allows('is-admin', Auth::user())) {        
+        if (!Gate::allows('is-admin')) {
             $tasks->where('created_by', $currentUserId)
                     ->orWhereIn('tasks.id', function ($subQuery) use ($currentUserId) {
                     // tasks assigned to the user
@@ -54,6 +52,10 @@ class TaskController extends Controller
      */
     public function store(TaskRequest $request)
     {
+        if (Gate::denies('can_create')) {
+            abort(403, 'Unauthorized action.');
+        }
+
         // ? server-side validation taken care in TaskRequest
         $params = $request->all();
         $params["created_by"] = $this->currentUserId();
@@ -77,6 +79,10 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
+        if (Gate::denies('is-admin')) {
+            abort(403, 'Unauthorized action.');
+        }
+
         $id = base64_decode($id);
         $task = Task::select(['id', 'title', 'due_date', 'status', 'desc', 'created_by'])->where("id", $id)->get();
 
@@ -88,6 +94,10 @@ class TaskController extends Controller
      */
     public function update(TaskRequest $request, $id)
     {
+        if (Gate::denies('is-admin')) {
+            abort(403, 'Unauthorized action.');
+        }
+
         $params = $request->all();
         $id = base64_decode($id);
 

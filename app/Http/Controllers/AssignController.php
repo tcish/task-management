@@ -4,12 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\TaskAssignment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class AssignController extends Controller
 {
     public function store(Request $request) {
+        if (Gate::denies('can_assign')) {
+            // The user is not authorized to assign any employee
+            abort(403, 'Unauthorized action.');
+        }
+
         // Define the validation rules
         $rules = [
             'task-id' => 'required|string',
@@ -36,6 +42,10 @@ class AssignController extends Controller
     }
 
     public function checkAssignee($task_id, $user_id) {
+        if (Gate::denies('can_assign')) {
+            abort(403, 'Unauthorized action.');
+        }
+
         $task_id = base64_decode($task_id);
 
         $hasAssign = TaskAssignment::where("task_id", $task_id)->where("assign_to", $user_id)->first();
