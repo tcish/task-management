@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TaskRequest;
 use App\Models\Task;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use App\Traits\CurrentUserTrait;
 
 class TaskController extends Controller
 {
+    use CurrentUserTrait;
+
     /**
      * Display a listing of the resource.
      */
@@ -18,7 +19,7 @@ class TaskController extends Controller
         // ! here it's not making much difference but in bigger scenario specifying select can optimize load
         $tasks = Task::select(['id', 'title', 'due_date', 'status', 'desc', 'created_by'])->with('createdBy:id,name')->get();
 
-        return view("pages.admin.index")->with("tasks", $tasks);
+        return view("pages.index")->with("tasks", $tasks);
     }
 
     /**
@@ -36,7 +37,7 @@ class TaskController extends Controller
     {
         // ? server-side validation taken care in TaskRequest
         $params = $request->all();
-        $params["created_by"] = Auth::user()->id;
+        $params["created_by"] = $this->currentUserId();
         // * no need all the fields to handle manually it will be handled by fillable
         Task::create($params);
 
@@ -48,32 +49,50 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Task $task)
+    public function show()
     {
-        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Task $task)
+    public function edit($id)
     {
-        //
+        $id = base64_decode($id);
+        $task = Task::select(['id', 'title', 'due_date', 'status', 'desc', 'created_by'])->where("id", $id)->get();
+
+        return response()->json(["status" => true, "task" => $task]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Task $task)
+    public function update(TaskRequest $request, $id)
     {
-        //
+        $params = $request->all();
+
+        // Find the task by ID
+        $task = Task::findOrFail($id);
+
+        // Update the task with the validated data, respecting the fillable properties
+        $task->update($params);
+
+        Session::flash('success', 'Task updated successfully!');
+
+        return redirect()->route('tasks.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Task $task)
+    public function destroy($id)
     {
-        //
+        $id = base64_decode($id);
+
+        Task::where("id", $id)->delete();
+
+        Session::flash('success', 'Task deleted successfully!');
+
+        return redirect()->route('tasks.index');
     }
 }

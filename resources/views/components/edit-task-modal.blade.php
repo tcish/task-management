@@ -1,19 +1,18 @@
-  <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary mb-1 float-end" data-bs-toggle="modal" data-bs-target="#taskModal">Add
-    task</button>
-
+  {{-- wanted to do add & edit with same form but because of add & edit button in same file(admin->index.blade.php) it's confecting each other --}}
   <!-- Modal -->
-  <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
+  <div class="modal fade" id="taskEditModal" tabindex="-1" aria-labelledby="editTaskModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="taskModalLabel">Add Task</h1>
+          <h1 class="modal-title fs-5" id="editTaskModalLabel">Add Task</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form method="post" action="{{ route("tasks.store") }}" id="taskForm" class="row g-3 needs-validation"
-            novalidate>
+          <form method="post" id="taskEditForm" class="row g-3 needs-edit-form-validation" novalidate>
             @csrf
+
+            <input type="hidden" name="taskId" id="taskId">
+
             <!-- Title input -->
             <div class="col-12 mb-3">
               <label for="title" class="form-label">Title</label>
@@ -48,7 +47,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" id="taskFormSubmit" class="btn btn-sm btn-primary">Save</button>
+          <button type="submit" id="taskEditFormSubmit" class="btn btn-sm btn-primary">Save</button>
         </div>
       </div>
     </div>
@@ -62,7 +61,7 @@
         let isValid = true;
 
         // Loop over forms and check validity
-        $('.needs-validation').each(function() {
+        $('.needs-edit-form-validation').each(function() {
           const form = $(this);
           if (!form[0].checkValidity()) {
             isValid = false;
@@ -76,12 +75,17 @@
       }
 
       // Attach event listener to the submit button
-      $('#taskFormSubmit').on('click', function(event) {
+      $('#taskEditFormSubmit').on('click', function(event) {
         if (!validateForms()) {
           event.preventDefault();
           event.stopPropagation();
         } else {
-          $("#taskForm").submit();
+          let form = $('#taskEditForm');
+          let taskId = $('#taskId').val();
+
+          form.attr('action', `/tasks/update/${taskId}`);
+
+          form.submit();
         }
       });
     </script>

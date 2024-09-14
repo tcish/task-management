@@ -6,17 +6,14 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class EditTask extends Component
+class EditTaskModal extends Component
 {
-
-    public $taskId;
-
     /**
      * Create a new component instance.
      */
-    public function __construct($taskId)
+    public function __construct()
     {
-        $this->taskId = $taskId;
+        //
     }
 
     /**
@@ -24,6 +21,6 @@ class EditTask extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.edit-task');
+        return view('components.edit-task-modal');
     }
 }

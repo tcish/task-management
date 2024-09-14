@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Traits\CurrentUserTrait;
 
 class EmployeeController extends Controller
 {
+    use CurrentUserTrait;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('pages.employee.index');
+        $tasks = Task::select(['id', 'title', 'due_date', 'status', 'desc', 'created_by'])->with('createdBy:id,name')->where("created_by", $this->currentUserId())->get();
+
+        return view('pages.index')->with("tasks", $tasks);
     }
 
     /**
