@@ -49,7 +49,9 @@
                       </td>
                       <td>{{ $task->createdBy->name }}</td>
                       <td class="d-flex">
-                        <a href="" class="btn btn-sm btn-secondary me-2">Assign</a>
+                        <button type="button" class="btn btn-sm btn-secondary me-2" data-bs-toggle="modal"
+                          data-bs-target="#taskAssignModal"
+                          onclick="assignModal('{{ base64_encode($task->id) }}')">Assign</button>
                         <button type="button" class="btn btn-sm btn-info me-2" data-bs-toggle="modal"
                           data-bs-target="#taskEditModal"
                           onclick="editTask('{{ base64_encode($task->id) }}')">Edit</button>
@@ -69,6 +71,8 @@
 
             <!-- Edit Task -->
             <x-edit-task-modal />
+            <!-- Assign Task -->
+            <x-assign-task :users="$users" />
           </div>
         </div>
       </div>
@@ -141,7 +145,7 @@
             url: "{{ route("tasks.edit", ":taskId") }}".replace(':taskId', taskId),
             success: function(response) {
               // Populate the form fields with response data
-              $('#taskEditModal input[name="taskId"]').val(response.task[0].id);
+              $('#taskEditModal input[name="taskId"]').val(taskId);
               $('#taskEditModal input[name="title"]').val(response.task[0].title);
               $('#taskEditModal input[name="due_date"]').val(response.task[0].due_date);
               $('#taskEditModal select[name="status"]').val(response.task[0].status);
@@ -150,12 +154,17 @@
           })
         }
 
+        // Delete Task
         $('#deleteTaskButton').on('click', function(event) {
           event.preventDefault();
           if (confirm("Are you sure you want to delete this task?")) {
             $("#deleteTaskForm").submit();
           }
         });
+
+        window.assignModal = function(taskId) {
+          $('#taskAssignModal input[name="task-id"]').val(taskId);
+        }
       });
     </script>
   @endpush

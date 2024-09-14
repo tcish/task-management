@@ -1,7 +1,7 @@
 <nav x-data="{ open: false }" class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
   <div class="container-fluid">
     <!-- Logo -->
-    <a class="navbar-brand" href="{{ route("dashboard") }}">
+    <a class="navbar-brand" href="{{ route("tasks.index") }}">
       <x-application-logo class="d-inline-block align-top" style="height: 36px;" alt="Logo" />
     </a>
 

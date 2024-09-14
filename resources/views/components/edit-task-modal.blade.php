@@ -4,7 +4,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="editTaskModalLabel">Add Task</h1>
+          <h1 class="modal-title fs-5" id="editTaskModalLabel">Edit Task</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -78,7 +78,6 @@
       $('#taskEditFormSubmit').on('click', function(event) {
         if (!validateForms()) {
           event.preventDefault();
-          event.stopPropagation();
         } else {
           let form = $('#taskEditForm');
           let taskId = $('#taskId').val();

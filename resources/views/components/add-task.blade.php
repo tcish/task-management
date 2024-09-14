@@ -79,7 +79,6 @@
       $('#taskFormSubmit').on('click', function(event) {
         if (!validateForms()) {
           event.preventDefault();
-          event.stopPropagation();
         } else {
           $("#taskForm").submit();
         }

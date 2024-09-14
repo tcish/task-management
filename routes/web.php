@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AssignController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
@@ -16,14 +17,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // ? task routes
     Route::post('/tasks/update/{task}', [TaskController::class, 'update']);
     Route::resource('tasks', TaskController::class);
+    
+    // ? assign routes
+    Route::post('/assigns-store', [AssignController::class, 'store'])->name("assigns.store");
+    Route::get('/assignee-check/{taskId}/{userId}', [AssignController::class, 'checkAssignee'])->name("assigns.check");
 });
 
 // Admin-specific routes
-Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
-    // ! default routes by breeze
-    Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
-    Route::resource('tasks', TaskController::class);
-});
+Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {});
 
 // Employee-specific routes
 Route::middleware(['auth', 'verified', 'role:employee'])->group(function () {

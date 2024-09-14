@@ -69,6 +69,8 @@
 
             <!-- Edit Task -->
             <x-edit-task-modal />
+            <!-- Assign Task -->
+            <x-assign-task users="{{ $users }}" />
           </div>
         </div>
       </div>
