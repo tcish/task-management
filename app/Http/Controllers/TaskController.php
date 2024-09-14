@@ -6,6 +6,8 @@ use App\Http\Requests\TaskRequest;
 use App\Models\Task;
 use Illuminate\Support\Facades\Session;
 use App\Traits\CurrentUserTrait;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class TaskController extends Controller
 {
@@ -17,7 +19,13 @@ class TaskController extends Controller
     public function index()
     {
         // ! here it's not making much difference but in bigger scenario specifying select can optimize load
-        $tasks = Task::select(['id', 'title', 'due_date', 'status', 'desc', 'created_by'])->with('createdBy:id,name')->get();
+        $tasks = Task::select(['id', 'title', 'due_date', 'status', 'desc', 'created_by'])->with('createdBy:id,name');
+
+        if (!Gate::allows('is-admin', Auth::user())) {
+            $tasks = $tasks->where("created_by", $this->currentUserId());
+        }
+
+        $tasks = $tasks->get();
 
         return view("pages.index")->with("tasks", $tasks);
     }
