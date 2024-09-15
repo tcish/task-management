@@ -28,9 +28,9 @@
         </div>
 
         <div class="d-flex justify-content-end">
-            @if (Route::has('password.request'))
-                <a class="btn btn-link" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
+            @if (Route::has('register'))
+                <a class="btn btn-link" href="{{ route('register') }}">
+                    {{ 'Register Here!' }}
                 </a>
             @endif
 

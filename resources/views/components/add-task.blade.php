@@ -31,6 +31,7 @@
             <div class="invalid-feedback">Please select due date.</div>
           </div>
 
+          <!-- Status Select-->
           <div class="col-12 col-md-6 mb-3">
             <label for="status" class="form-label">Status</label>
             <select class="form-select" name="status" required>

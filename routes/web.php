@@ -25,15 +25,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // ? permission routes
     Route::post('/permissions-store', [PermissionController::class, 'store'])->name("permissions.store")->middleware("can:is-admin");
     Route::get('/get-permissions-by-userId/{userId}', [PermissionController::class, 'getPermissionByUserId'])->name("permissions.userId")->middleware("can:is-admin");
-    // Route::get('/permissions-check/{userId}', [PermissionController::class, 'checkPermission'])->name("permissions.check");
 });
 
 // Admin-specific routes
 Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {});
 
 // Employee-specific routes
-Route::middleware(['auth', 'verified', 'role:employee'])->group(function () {
-    Route::get('/employee', [EmployeeController::class, 'index'])->name('employee.index');
-});
+Route::middleware(['auth', 'verified', 'role:employee'])->group(function () {});
 
 require __DIR__.'/auth.php';
