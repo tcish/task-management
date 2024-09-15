@@ -4,7 +4,7 @@
     <a class="navbar-brand" href="{{ route("tasks.index") }}">
       <x-application-logo class="d-inline-block align-top" style="height: 36px;" alt="Logo" />
     </a>
-    <h2>To-do List</h2>
+    <h2>@yield('title', 'To-do List')</h2>
 
     <!-- Hamburger -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"

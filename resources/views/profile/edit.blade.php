@@ -1,11 +1,13 @@
 <x-app-layout>
+    @section('title', 'Profile')
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Profile') }}
         </h2>
     </x-slot>
 
-    <div class="py-4">
+    <div class="py-4 custom-bg">
         <div class="container">
             <!-- Profile Update Form -->
             <div class="card mb-4">

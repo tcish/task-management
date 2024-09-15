@@ -1,6 +1,6 @@
 @can("can_create")
   <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary mb-1 float-end" data-bs-toggle="modal" data-bs-target="#taskModal">
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#taskModal">
     Add task
   </button>
 @endcan
