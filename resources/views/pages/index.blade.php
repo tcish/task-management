@@ -33,6 +33,7 @@
               <table id="tasks-table" class="display">
                 <thead>
                   <tr>
+                    <th>ID</th>
                     <th>Title</th>
                     <th>Due Date</th>
                     <th>Description</th>
@@ -44,6 +45,7 @@
                 <tbody>
                   @foreach ($tasks as $task)
                     <tr>
+                      <td>{{ $loop->iteration }}</td> <!-- Incremental ID -->
                       <td>{{ $task->title }}</td>
                       <td>{{ date("d-m-Y", strtotime($task->due_date)) }}</td>
                       <td>{{ $task->desc }}</td>
@@ -54,9 +56,10 @@
                       <td>{{ $task->createdBy->name }}</td>
                       <td class="d-flex">
                         @if ($task->status != "completed")
-                          <a href="{{route('tasks.mark.complete', base64_encode($task->id))}}" class="btn btn-sm btn-success me-2">Mark Complete</a>
+                          <a href="{{ route("tasks.mark.complete", base64_encode($task->id)) }}"
+                            class="btn btn-sm btn-success me-2">Mark Complete</a>
                         @endif
-                        
+
                         @can("can_assign")
                           <button type="button" class="btn btn-sm btn-secondary me-2" data-bs-toggle="modal"
                             data-bs-target="#taskAssignModal" onclick="assignModal('{{ base64_encode($task->id) }}')">
@@ -64,7 +67,7 @@
                           </button>
                         @endcan
 
-                        @can('is-admin')
+                        @can("is-admin")
                           <button type="button" class="btn btn-sm btn-info me-2" data-bs-toggle="modal"
                             data-bs-target="#taskEditModal" onclick="editTask('{{ base64_encode($task->id) }}')">
                             Edit
@@ -74,7 +77,8 @@
                             id="deleteTaskForm">
                             @csrf
                             @method("delete")
-                            <button type="submit" class="btn btn-sm btn-danger" id="deleteTaskButton">Delete</button>
+                            <button type="submit" class="btn btn-sm btn-danger"
+                              onclick="return confirm('Are you sure you want to delete this task?')"">Delete</button>
                           </form>
                         @endcan
                       </td>
@@ -107,13 +111,14 @@
 
         const statusFilterEl = $('#statusFilter');
         let table = $("#tasks-table").DataTable({
-          columnDefs: [{
-              targets: 0,
+          "order": [[0, "asc"]], // This ensures the table shows the newest entry on top, based on task id
+          columnDefs: [
+            {
+              targets: 1,
               orderable: false,
             },
             {
-              targets: 2,
-              searchable: false,
+              targets: 1,
               orderable: false,
             },
             {
@@ -130,6 +135,11 @@
               targets: 5,
               searchable: false,
               orderable: false,
+            },
+            {
+              targets: 6,
+              searchable: false,
+              orderable: false,
             }
           ],
         });
@@ -137,7 +147,7 @@
         // Custom filtering function
         table.search.fixed('status', function(searchStr, data, index) {
           let selectedStatus = statusFilterEl.val();
-          let statusElement = $(data[3]).text().trim(); // Extract text content from the span
+          let statusElement = $(data[4]).text().trim(); // Extract text content from the td
           let normalizedStatus = statusElement.toLowerCase();
 
           if (selectedStatus === '' || normalizedStatus === selectedStatus) {
@@ -171,14 +181,7 @@
           })
         }
 
-        // Delete Task
-        $('#deleteTaskButton').on('click', function(event) {
-          event.preventDefault();
-          if (confirm("Are you sure you want to delete this task?")) {
-            $("#deleteTaskForm").submit();
-          }
-        });
-
+        // setting task id for task assign modal
         window.assignModal = function(taskId) {
           $('#taskAssignModal input[name="task-id"]').val(taskId);
         }

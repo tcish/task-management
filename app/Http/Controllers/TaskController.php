@@ -31,7 +31,7 @@ class TaskController extends Controller
                 });
         }
 
-        $tasks = $tasks->get();
+        $tasks = $tasks->orderBy("tasks.id", "desc")->get();
 
         // for assign & permission users list
         $users = User::where("role", "employee")->get();
