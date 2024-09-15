@@ -80,12 +80,13 @@ php artisan serve
 ```bash
 php artisan db:seed --class=DatabaseSeeder
 ```
+
 ---
 
 ## Features
 
 **User Registration and Authentication:**
-- Implemented user registration and login functionality using Laravel’s built-in authentication (breeze).
+- Implemented user registration and login functionality using Laravel’s built-in authentication ([Breeze](https://laravel.com/docs/11.x/starter-kits#laravel-breeze)).
 
 **User Roles:**
 - Uses Laravel’s gates to restrict access to resources and actions based on user roles.
@@ -104,10 +105,22 @@ php artisan db:seed --class=DatabaseSeeder
 **User-Specific Tasks:**
 - Depanding permission user can assign or create tasks.
 - Ensure each user only sees tasks assigned and created by them.
+
 ---
 
 ## Design choices
-- I chose to implement laravel component based design approche. clean separation & allow reusable.
+- I chose to implement laravel component based design approach. clean separation & allow reusable. Also use [Bootstrap](https://getbootstrap.com/) for front-end design and responsiveness.
+
+---
+
+## Tech Stack
+
+**Client:** HTML, CSS, Bootstrap, JavaScript, Jquery, Tippy.js
+
+**Server:** PHP, Laravel
+
+**Database:** MySQL
+
 ---
 
 ## Challenges Faced:
