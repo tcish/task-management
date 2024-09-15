@@ -30,7 +30,7 @@
 
       #tasks-table th:nth-child(5),
       #tasks-table td:nth-child(5) {
-        width: 120px;
+        max-width: 120px;
       }
 
       #tasks-table th:nth-child(6),
@@ -45,7 +45,7 @@
     </style>
   @endpush
   <div class="py-4 custom-bg">
-    <div class="container">
+    <div class="container-fluid">
       <div class="row justify-content-center">
         <div class="col-12">
           @if (session("success"))
@@ -167,7 +167,7 @@
         // initialize tooltip
         $('[data-bs-original-title="tooltip"]').tooltip();
 
-        // Hide add task alert after 3 seconds (3000 milliseconds)
+        // Hide alert after 3 seconds (3000 milliseconds)
         setTimeout(function() {
           $('#add-task-alert').fadeOut('slow', function() {
             $(this).remove(); // removing the alert from DOM after fading out
