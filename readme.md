@@ -75,6 +75,9 @@ php artisan serve
 **Admin credentials**
 - Email: `admin@example.com`
 - Password: `12345678`
+
+**If you want dummy data you run below command**
+- php artisan db:seed --class=DatabaseSeeder
 ---
 
 ## Features
