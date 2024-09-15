@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+<nav x-data="{ open: false }" class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top">
   <div class="container-fluid">
     <!-- Logo -->
     <a class="navbar-brand" href="{{ route("tasks.index") }}">

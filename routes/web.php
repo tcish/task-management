@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AssignController;
-use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;

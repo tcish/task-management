@@ -9,10 +9,6 @@
         </p>
     </header>
 
-    <form id="send-verification" method="post" action="{{ route('verification.send') }}">
-        @csrf
-    </form>
-
     <form method="post" action="{{ route('profile.update') }}" class="mt-4">
         @csrf
         @method('patch')
@@ -37,24 +33,6 @@
                     @foreach($errors->get('email') as $message)
                         <div>{{ $message }}</div>
                     @endforeach
-                </div>
-            @endif
-
-            @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
-                <div class="mt-3">
-                    <p class="text-muted">
-                        {{ __('Your email address is unverified.') }}
-
-                        <button form="send-verification" class="btn btn-link p-0">
-                            {{ __('Click here to re-send the verification email.') }}
-                        </button>
-                    </p>
-
-                    @if (session('status') === 'verification-link-sent')
-                        <p class="mt-2 text-success">
-                            {{ __('A new verification link has been sent to your email address.') }}
-                        </p>
-                    @endif
                 </div>
             @endif
         </div>
