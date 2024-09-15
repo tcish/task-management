@@ -1,4 +1,4 @@
-<button type="button" class="btn btn-dark me-2" data-bs-toggle="modal"
+<button type="button" class="btn btn-dark" data-bs-toggle="modal"
   data-bs-target="#permissionModal">Permissions</button>
 
 <!-- Modal -->

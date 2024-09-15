@@ -71,12 +71,12 @@
                 </div>
 
                 <div>
-                  <!-- Add Task -->
-                  <x-add-task />
                   <!-- permission -->
                   @can("is-admin")
                     <x-permission :users="$users" />
                   @endcan
+                  <!-- Add Task -->
+                  <x-add-task />
                 </div>
               </div>
 
