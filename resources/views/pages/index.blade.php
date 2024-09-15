@@ -53,6 +53,10 @@
                       </td>
                       <td>{{ $task->createdBy->name }}</td>
                       <td class="d-flex">
+                        @if ($task->status != "completed")
+                          <a href="{{route('tasks.mark.complete', base64_encode($task->id))}}" class="btn btn-sm btn-success me-2">Mark Complete</a>
+                        @endif
+                        
                         @can("can_assign")
                           <button type="button" class="btn btn-sm btn-secondary me-2" data-bs-toggle="modal"
                             data-bs-target="#taskAssignModal" onclick="assignModal('{{ base64_encode($task->id) }}')">

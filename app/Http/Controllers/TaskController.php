@@ -125,4 +125,14 @@ class TaskController extends Controller
 
         return redirect()->route('tasks.index');
     }
+
+    public function markComplete($id) {
+        $id = base64_decode($id);
+
+        Task::where("id", $id)->update(["status" => "completed"]);
+
+        Session::flash('success', 'Task mark as completed successfully!');
+
+        return redirect()->route('tasks.index');
+    }
 }
