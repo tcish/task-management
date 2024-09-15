@@ -76,6 +76,8 @@ php artisan serve
 - Email: `admin@example.com`
 - Password: `12345678`
 
+**I you want Employee user then register a user it will register as a employee**
+
 **If you want dummy data you can run below command**
 ```bash
 php artisan db:seed --class=DatabaseSeeder
