@@ -24,7 +24,7 @@ class TaskFactory extends Factory
             'title' => $this->faker->words($this->faker->numberBetween(1, 5), true),
             'due_date' => $this->faker->date,
             'status' => $this->faker->randomElement(['new', 'in-progress', 'completed']),
-            'desc' => $this->faker->sentence($this->faker->numberBetween(10, 20)),
+            'desc' => $this->faker->sentence($this->faker->numberBetween(10, 70)),
             'created_by' => User::inRandomOrder()->first()->id,
         ];
     }

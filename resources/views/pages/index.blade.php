@@ -175,7 +175,7 @@
         }, 3000);
 
         // Apply to title cells
-        truncateAndPopover('.title-cell', 'full-title', 3);
+        truncateAndPopover('.title-cell', 'full-title', 4);
 
         // Apply to description cells
         truncateAndPopover('.desc-cell', 'full-desc', 4);
