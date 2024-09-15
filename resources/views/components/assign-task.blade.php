@@ -83,6 +83,9 @@
               $('.invalid-feedback').text("");
               $('#assignTaskFormSubmit').prop('disabled', false);
             }
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            console.error("Error: " + textStatus + ": " + errorThrown);
           }
         })
       })

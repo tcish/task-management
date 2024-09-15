@@ -95,6 +95,9 @@
               $('#can_create').prop('checked', true);
             }
           }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.error("Error: " + textStatus + ": " + errorThrown);
         }
       })
     })

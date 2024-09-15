@@ -249,6 +249,9 @@
               $('#taskEditModal input[name="due_date"]').val(response.task[0].due_date);
               $('#taskEditModal select[name="status"]').val(response.task[0].status);
               $('#taskEditModal textarea[name="desc"]').val(response.task[0].desc);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+              console.error("Error: " + textStatus + ": " + errorThrown);
             }
           })
         }
