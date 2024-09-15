@@ -36,10 +36,6 @@
               <input class="form-check-input" type="checkbox" name="permission[]" id="can_create" value="can_create" />
               <label class="form-check-label" for="can_create">Can Create</label>
             </div>
-
-            <div id="checkboxError" class="invalid-feedback" style="display:none;">
-              Please select at least one permission.
-            </div>
           </div>
         </form>
       </div>
