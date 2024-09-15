@@ -30,17 +30,6 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="text-danger mt-2" />
         </div>
 
-        <!-- Role -->
-        <div class="col-12 mb-3">
-            <label for="role" class="form-label">Role</label>
-            <select class="form-select" name="role" required>
-                <option selected disabled value="">Select...</option>
-                <option value="admin">Admin</option>
-                <option value="employee">Employee</option>
-            </select>
-            <x-input-error :messages="$errors->get('role')" class="text-danger mt-2" />
-            </div>
-
         <div class="d-flex justify-content-end mb-3">
             <a class="btn btn-link" href="{{ route('login') }}">
                 {{ __('Already registered?') }}
