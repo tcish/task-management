@@ -75,6 +75,7 @@ php artisan serve
 **Admin credentials**
 - Email: `admin@example.com`
 - Password: `12345678`
+---
 
 ## Features
 
@@ -85,7 +86,7 @@ php artisan serve
 - Uses Laravel’s gates to restrict access to resources and actions based on user roles.
 - Implemented middleware to enforce role-based access.
 
-**Task Management**
+**Task Managment**
 - CRUD Operations for Tasks.
 - Option for users to mark tasks as completed.
 - List view of tasks with filters, in-progress list is shown default.
@@ -98,9 +99,11 @@ php artisan serve
 **User-Specific Tasks:**
 - Depanding permission user can assign or create tasks.
 - Ensure each user only sees tasks assigned and created by them.
+---
 
 ## Design choices
 - I chose to implement laravel component based design approche. clean separation & allow reusable.
+---
 
 ## Challenges Faced:
 - One of the main challenges was completing the task under a tight deadline of *3 days*. This required efficient time management and decision-making to prioritize features while maintaining code quality.
