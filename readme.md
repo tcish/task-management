@@ -122,8 +122,3 @@ php artisan db:seed --class=DatabaseSeeder
 **Server:** PHP, Laravel
 
 **Database:** MySQL
-
----
-
-## Challenges Faced:
-- One of the main challenges was completing the task under a tight deadline of *3 days*. This required efficient time management and decision-making to prioritize features while maintaining code quality.
